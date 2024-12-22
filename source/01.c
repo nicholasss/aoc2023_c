@@ -9,8 +9,8 @@ int read_txt(const char *file_path);
 // main function
 int main() {
 
-	const char *test_file = "./01/test.txt";
-	const char *main_file = "./01/main.txt";
+	const char *test_file = "./source/01/test.txt";
+	const char *main_file = "./source/01/main.txt";
 
 	int test_num = read_txt(test_file);
 	int main_num = read_txt(main_file);
