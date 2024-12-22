@@ -21,6 +21,18 @@ int main() {
 
 // function definitions
 int read_txt(const char *file_path) {
+
+	char *numbers[] = {
+		"one",
+		"two",
+		"three",
+		"four",
+		"five",
+		"six",
+		"seven",
+		"eight",
+		"nine"
+	};
 	
 	FILE *file = fopen(file_path, "r");
 
@@ -32,6 +44,7 @@ int read_txt(const char *file_path) {
 	char line[256]; // buffer for each line of the 
 	int sum = 0;
 
+	// TODO: add spelled out digits
 	while(fgets(line, sizeof(line), file)) {
 		char first = '\0';
 		char second = '\0';
