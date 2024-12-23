@@ -6,6 +6,10 @@
 // function signatures
 int read_txt(const char *file_path);
 
+char string_to_num(char *str);
+
+enum nums{one, two ,three, four, five, six, seven, eight, nine};
+
 // main function
 int main() {
 
@@ -20,9 +24,34 @@ int main() {
 }
 
 // function definitions
+char string_to_num(char *str) {
+	if (strcmp(str, "one")) {
+		return '1';
+	} else if (strcmp(str, "two")) {
+		return '2';
+	} else if (strcmp(str, "three")) {
+		return '3';
+	} else if (strcmp(str, "four")) {
+		return '4';
+	} else if (strcmp(str, "five")) {
+		return '5';
+	} else if (strcmp(str, "six")) {
+		return '6';
+	} else if (strcmp(str, "seven")) {
+		return '7';
+	} else if (strcmp(str, "eight")) {
+		return '8';
+	} else if (strcmp(str, "nine")) {
+		return '9';
+	} else {
+		return '0';
+	}
+}
+
 int read_txt(const char *file_path) {
 
 	char *numbers[] = {
+		"zero",
 		"one",
 		"two",
 		"three",
@@ -33,7 +62,7 @@ int read_txt(const char *file_path) {
 		"eight",
 		"nine"
 	};
-	
+
 	FILE *file = fopen(file_path, "r");
 
 	if (file == NULL) {
@@ -48,16 +77,23 @@ int read_txt(const char *file_path) {
 	while(fgets(line, sizeof(line), file)) {
 		char first = '\0';
 		char second = '\0';
+
 		int line_len = (int)strlen(line);
 
-		// get first number
+		// get first digit number
 		for (int i = 0; i < line_len; i++) {
 			char nchar = line[i];
-
 			if (isdigit(nchar)) {
 				first = nchar;
 				break;
 			}
+		}
+
+		// check 5 letters for spelled number
+		char letters[6];
+		for (int i = 0; i < 5; i++) {
+			letters[i] = line[i];
+			first = string_to_num(letters);
 		}
 
 		// get second number
@@ -70,6 +106,8 @@ int read_txt(const char *file_path) {
 			}
 		}
 		second = last_char;
+
+		// check for the last letters
 
 		// combine them together #1,#2
 		char cnumber[10] = "00";
