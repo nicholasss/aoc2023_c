@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 
+// constants and structs
 const char *test_path = "./source/02/test.txt";
 const char *main_path = "./source/02/main.txt";
 
@@ -15,10 +16,12 @@ typedef struct {
 	char *color;
 } color_num;
 
+// function signatures
 void free_obj(color_num *obj);
 color_num *text_to_obj(char *str);
 int read_txt(const char *file_path);
 
+// main
 int main() {
 	int test = read_txt(test_path);
 	int main = read_txt(main_path);
@@ -27,6 +30,7 @@ int main() {
 	printf("Main calculation is %d\n", main);
 }
 
+// function definitions
 void free_obj(color_num *obj) {
 	free(obj->color);
 	free(obj);
