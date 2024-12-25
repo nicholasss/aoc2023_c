@@ -1,2 +1,4 @@
 build
 *.txt
+scratch.c
+scratch.o

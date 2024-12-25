@@ -3,12 +3,19 @@
 #include <ctype.h>
 #include <stdlib.h>
 
+typedef struct {
+	char number;
+	int start_pos;
+} num_obj;
+
 // function signatures
+void free_obj(num_obj *obj);
+num_obj *make_obj(int start_pos, char number);
+num_obj **read_line(char *line);
 int read_txt(const char *file_path);
+num_obj *string_to_num(int start_pos, char *str);
 
-char string_to_num(char *str);
-
-enum nums{one, two ,three, four, five, six, seven, eight, nine};
+// enum nums{one, two ,three, four, five, six, seven, eight, nine};
 
 // main function
 int main() {
@@ -23,33 +30,80 @@ int main() {
 	printf("Main calculation is %d\n", main_num);
 }
 
+void free_obj(num_obj *obj) {
+	free(obj);
+}
+
+num_obj *make_obj(int start_pos, char number) {
+	num_obj *new_obj = malloc(sizeof(num_obj));
+	if (new_obj == NULL) {
+		printf("Unable to allocate memory for new object\n");
+		return NULL;
+	}
+
+	new_obj->start_pos = start_pos;
+	new_obj->number = number;
+	return new_obj;
+};
+
 // function definitions
-char string_to_num(char *str) {
-	if (strcmp(str, "one")) {
-		return '1';
-	} else if (strcmp(str, "two")) {
-		return '2';
-	} else if (strcmp(str, "three")) {
-		return '3';
-	} else if (strcmp(str, "four")) {
-		return '4';
-	} else if (strcmp(str, "five")) {
-		return '5';
-	} else if (strcmp(str, "six")) {
-		return '6';
-	} else if (strcmp(str, "seven")) {
-		return '7';
-	} else if (strcmp(str, "eight")) {
-		return '8';
-	} else if (strcmp(str, "nine")) {
-		return '9';
+num_obj *string_to_num(int start_pos, char *str) {
+	if (strcmp(str, "one") == 0) {
+		return make_obj(start_pos, '1');
+	} else if (strcmp(str, "two") == 0) {
+		return make_obj(start_pos, '2');
+	} else if (strcmp(str, "three") == 0) {
+		return make_obj(start_pos, '3');
+	} else if (strcmp(str, "four") == 0) {
+		return make_obj(start_pos,'4');
+	} else if (strcmp(str, "five") == 0) {
+		return make_obj(start_pos, '5');
+	} else if (strcmp(str, "six") == 0) {
+		return make_obj(start_pos, '6');
+	} else if (strcmp(str, "seven") == 0) {
+		return make_obj(start_pos, '7');
+	} else if (strcmp(str, "eight") == 0) {
+		return make_obj(start_pos, '8');
+	} else if (strcmp(str, "nine") == 0) {
+		return make_obj(start_pos, '9');
 	} else {
-		return '0';
+		printf("Unable to identify the following number: %s\n", str); 
+		return NULL;
 	}
 }
 
-int read_txt(const char *file_path) {
+num_obj **read_line(char *line) {
+	// returns two num_objs
+	num_obj *first_digit;
+	num_obj *first_spelled;
+	num_obj *second_digit;
+	num_obj *second_spelled;
+	int line_len = (int)strlen(line);
 
+	// first letter
+	// find both first letter and first number then return both
+	for (int i = 0; i < line_len; i++) {
+		if (isalpha(line[i])) {
+			char *buffer = malloc(sizeof(char) * 10);
+
+			for (int j = i; j < line_len; j++) {
+				strncpy(buffer, line + i, i - j);
+				if (isdigit(line[j])) {
+					break;
+				}
+
+				first_spelled = string_to_num(i, buffer);
+
+				if (first_spelled != NULL) {
+				
+				}
+			}
+		}
+	}
+
+}
+
+int read_txt(const char *file_path) {
 	char *numbers[] = {
 		"zero",
 		"one",
@@ -75,8 +129,8 @@ int read_txt(const char *file_path) {
 
 	// TODO: add spelled out digits
 	while(fgets(line, sizeof(line), file)) {
-		char first = '\0';
-		char second = '\0';
+		num_obj *first; 
+		num_obj *second;
 
 		int line_len = (int)strlen(line);
 
