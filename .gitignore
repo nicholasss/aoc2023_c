@@ -2,3 +2,5 @@ build
 *.txt
 scratch.c
 scratch.o
+.vscode
+.DS_store
