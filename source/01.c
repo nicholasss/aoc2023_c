@@ -147,7 +147,7 @@ int read_txt(const char *file_path) {
 		char letters[6];
 		for (int i = 0; i < 5; i++) {
 			letters[i] = line[i];
-			first = string_to_num(letters);
+			// first = string_to_num(letters);
 		}
 
 		// get second number
