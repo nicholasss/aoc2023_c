@@ -64,7 +64,6 @@ bool add_to_struct_list(color_num** list, int list_length, color_num *p_item) {
 		} else {
 			list[i] = p_item;
 			success = true;
-			// printf("added item to list at index %d\n", i);
 			break;
 		}
 
@@ -99,7 +98,6 @@ color_num *text_to_obj(char *str) {
 	char *color = malloc(10 * sizeof(char));
 	strncpy(color, str + color_starts_at, (sizeof(str) - color_starts_at) + 1);
 	obj->color = color;
-	// printf(" should be %d %s\n", obj->num, obj->color);
 	return obj;
 }
 
@@ -128,19 +126,17 @@ int read_txt(const char *file_path) {
 		for (int i = 0; i < line_length; i++) {
 			// finds the first color-num after 'game x:'
 			if (line[i] == ':') {
-				// printf("%c ---\n", line[i]);
 				obj_starts_at = i + 1;
 			}
 
 			// finds the end of the character and uses it
-			if (line[i] == comma || line[i] == semicolon) {
+			if (line[i] == comma || line[i] == semicolon || line[i] == '\n') {
+				// why would I not also put a newline to create an object
 				obj_ends_at = i;
 
 				char *score_str = malloc(sizeof(char) * 16);
 				int str_len = obj_ends_at - obj_starts_at - 1;
 				strncpy(score_str, line + obj_starts_at + 1, str_len);
-
-				// printf("'%s'\n", score_str);
 
 				// new_obj is created and can be added to the list
 				color_num* new_obj = text_to_obj(score_str);
@@ -167,38 +163,27 @@ int read_txt(const char *file_path) {
 			char *color = objs[i]->color; // this line causes segfault -- why?
 			int num = objs[i]->num;
 
-			// printf("game #%d -- %s : %d",game_num, color, num);
-
 			if (strcmp(color, "red") == 0) {
 				if (num > num_red) {
 					invalid_game = true;
-					// printf(" <-- invalid");
-					// printf("too many of red- %d\n", num);
-				}
-			} else if (strcmp(color, "blue") == 0) {
-				if (num > num_blue) {
-					invalid_game = true;
-					// printf(" <-- invalid");
-					// printf("too many of blue- %d\n", num);
-				}
-			} else if (strcmp(color, "green") == 0) {
-				if (num > num_green) {
-					invalid_game = true;
-					// printf(" <-- invalid");
-					// printf("too many of green- %d\n", num);
 				}
 			}
-			// printf("\n");
+			if (strcmp(color, "blue") == 0) {
+				if (num > num_blue) {
+					invalid_game = true;
+				}
+			}
+			if (strcmp(color, "green") == 0) {
+				if (num > num_green) {
+					invalid_game = true;
+				}
+			}
 		}
 
 		if (invalid_game == true) {
-			invalid_game = false; // reset invalid game
-			// printf("game %d is not going to be added\n\n", game_num);
 			continue; // go to the next line in the test
 		} else {
-			// printf("%d + %d", game_num, sum);
 			sum += game_num;
-			// printf(" = %d\n", sum);
 		}
 
 		// freeing resources
