@@ -1,6 +1,6 @@
 # general flags
 CC = gcc
-CFLAGS = -g -Wall -Wextra -Wconversion -Wno-sign-conversion -Wdouble-promotion -Wno-unused-parameter -Wno-unused-function -I$(SRC_DIR)
+CFLAGS = -std=c11 -g -I$(SRC_DIR) -Wall -Wformat=2 -Wextra -Wconversion -Wno-sign-conversion -Wdouble-promotion -Wno-unused-parameter -Wno-unused-function -Wcast-qual -Walloc-zero -Wduplicated-branches -Wduplicated-cond -Wfloat-equal
 
 # directories
 SRC_DIR = src
