@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include <strings.h>
@@ -30,19 +31,49 @@ int calc_number(const char *file_path) {
   }
 
   char line[256]; // buffer for each line of the
-  int sum = 0;
+  // int sum = 0;
 
-  // get the first digit and second digit of the line
+  // reading through each of the lines
+  // -- get the first digit and second digit of the line
   // -- and smush them together
   // -- e.g. '7' & '4' --> '74'
   while (fgets(line, sizeof(line), file)) {
-    // read through the characters
-    size_t chars_on_line = strlen(line);
-    printf("Line: %s\n", line);
+    size_t chars_on_line = strlen(line) - 1;
+    printf("Line: %s", line); // includes \n
 
-    for (int i = 0; i <= chars_on_line; i++) {
-      printf(" - Character: %c\n", line[i]);
+    // for use after completed reading line
+    bool found_first_number = false;
+    int first_ascii = 0;
+
+    // for tracking what the last number was
+    int previous_ascii = 0;
+
+    // reading through the characters on each line
+    for (size_t i = 0; i < chars_on_line; i++) {
+      // printf(" - Character: %c Number: %s\n", line[i],
+      //        char_is_number(line[i]) ? "true" : "false");
+
+      if (!char_is_number(line[i])) {
+        continue;
+      } else if (char_is_number(line[i]) && !found_first_number) {
+        first_ascii = line[i];
+        found_first_number = true;
+      }
+
+      previous_ascii = line[i];
     }
+    // after reading line, set the last number on line
+    int last_ascii = previous_ascii;
+
+    printf(" - first number: %c, second number: %c\n", first_ascii, last_ascii);
   }
+
   return 0;
+}
+
+bool char_is_number(char ascii_char) {
+  if (ascii_char >= 48 && ascii_char < 58) {
+    return true;
+  }
+  return false;
 }
