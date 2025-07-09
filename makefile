@@ -16,7 +16,7 @@ $(BUILD_DIR):
 $(BUILD_DIR)/01: $(BUILD_DIR)/01.o $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
 
-$(BUILD_DIR)/01.o: $(SRC_DIR)/01.c $(BUILD_DIR)
+$(BUILD_DIR)/01.o: $(SRC_DIR)/01.c $(SRC_DIR)/01.h $(BUILD_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # 02
@@ -25,7 +25,7 @@ $(BUILD_DIR)/01.o: $(SRC_DIR)/01.c $(BUILD_DIR)
 $(BUILD_DIR)/02: $(BUILD_DIR)/02.o $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
 
-$(BUILD_DIR)/02.o: $(SRC_DIR)/02.c $(BUILD_DIR)
+$(BUILD_DIR)/02.o: $(SRC_DIR)/02.c $(SRC_DIR)/02.h $(BUILD_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
